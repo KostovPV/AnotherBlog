@@ -13,7 +13,7 @@ export default function Header() {
           <img src={Logo} alt='logo-image'/>
         </Link>
         <ul className="nav__menu">
-          <li><Link to='/profile'>Sangare </Link></li>
+          <li><Link to='/profile/sdfsdf'>Sangare </Link></li>
           <li><Link to='/create'>Create post </Link></li>
           <li><Link to='/authors'>Authors </Link></li>
           <li><Link to='/logout'>Logout </Link></li>

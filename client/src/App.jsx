@@ -14,6 +14,8 @@ import Authors from "./pages/Authors";
 import Dashboard from "./pages/Dashboard";
 import CategoryPosts from "./pages/CategoryPosts";
 import Logout from "./pages/Logout";
+import AuthorPosts from './pages/AuthorPosts';
+import DeletePost from './pages/DeletePost';
 
 const router = createBrowserRouter([
   {
@@ -23,14 +25,17 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> },
-      { path: "myposts", element: <Dashboard /> },
+      { path: "/register", element: <Register /> },
+      { path: "myposts/sdfsdf", element: <Dashboard /> },
       { path: "profile/:id", element: <UserProfile /> },
       { path: "posts/:id", element: <PostDetail /> },
-      { path: "posts/categories/:category", element: <CategoryPosts /> },
+      { path: "posts/user/sdsdsd", element: <AuthorPosts /> },
+      { path: "posts/categories/category", element: <CategoryPosts /> },
+
       { path: "create", element: <CreatePosts /> },
       { path: "authors", element: <Authors /> },
       { path: "posts/:id/edit", element: <EditPost /> },
+      { path: "posts/:id/delete", element: <DeletePost /> },
       { path: "logout", element: <Logout /> },
     
 
