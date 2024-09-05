@@ -1,25 +1,46 @@
-
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from "../images/logo.jpeg";
-import { FaBars} from 'react-icons/fa';
-import {AiOutlineClose} from 'react-icons/ai';
+import { FaBars } from 'react-icons/fa';
+import {AiOutlineClose} from "react-icons/ai";
 
+
+import { UserContext } from '../context/userContext';
 
 export default function Header() {
+  const [isNavShowing, setIsNavShowing] = useState(window.innerWidth > 800 ? true : false);
+  const {currentUser} = useContext(UserContext);
+
+  const closeNavHandler = () => {
+    if (window.innerWidth < 800) {
+      setIsNavShowing(false)
+    } else {
+      setIsNavShowing(true)
+    }
+  }
   return (
     <nav>
       <div className='container nav__container'>
-        <Link to="/" className='nav__logo'>
-          <img src={Logo} alt='logo-image'/>
+        <Link to="/" className='nav__logo' onClick={closeNavHandler}>
+          <img src={Logo} alt='logo-image' />
         </Link>
-        <ul className="nav__menu">
-          <li><Link to='/profile/sdfsdf'>Sangare </Link></li>
-          <li><Link to='/create'>Create post </Link></li>
-          <li><Link to='/authors'>Authors </Link></li>
-          <li><Link to='/logout'>Logout </Link></li>
-        </ul>
-        <button className="nav__toggle-btn">
-          <AiOutlineClose />
+        {currentUser?.id && isNavShowing &&
+          <ul className="nav__menu">
+            <li><Link to={`/profile/${currentUser.id}`} onClick={closeNavHandler}>{currentUser?.name}</Link></li>
+            <li><Link to='/create' onClick={closeNavHandler}>Create post </Link></li>
+            <li><Link to='/authors' onClick={closeNavHandler}>Authors </Link></li>
+            <li><Link to='/logout' onClick={closeNavHandler}>Logout </Link></li>
+          </ul>
+        }
+           {!currentUser?.id && isNavShowing &&
+          <ul className="nav__menu">
+           
+            <li><Link to='/authors' onClick={closeNavHandler}>Authors </Link></li>
+            <li><Link to='/login' onClick={closeNavHandler}>Login </Link></li>
+          </ul>
+        }
+        <button className="nav__toggle-btn" onClick={() => setIsNavShowing(!isNavShowing)}>
+          {isNavShowing ? <AiOutlineClose /> : <FaBars />}
         </button>
       </div>
 

@@ -1,15 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Avatar from "../images/avatar1.jpg"
-export default function PostAuthor() {
+import axios from 'axios';
+import ReactTimeAgo from 'react-time-ago';
+import TimeAgo from 'javascript-time-ago';
+
+import en from 'javascript-time-ago/locale/en.json';
+import ru from 'javascript-time-ago/locale/ru.json';
+TimeAgo.addDefaultLocale(en);
+TimeAgo.addLocale(ru);
+
+export default function PostAuthor({ authorID, createdAt }) {
+    const [author, setAuthor] = useState({})
+    console.log('author', author);
+    
+    useEffect(() => {
+        const getAuthor = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/${authorID}`);
+                setAuthor(response?.data);
+            } catch (error) {
+                console.log(error);
+
+            }
+        }
+        getAuthor();
+    }, [])
+   
+    
     return (
-        <Link to={`/posts/user/sdsdsd`} className='post__author'>
+        <Link to={`/posts/users/${authorID}`} className='post__author'>
             <div className="post__author-avatar">
-                <img src={Avatar} alt="avatar-image" />
+                <img src={`${import.meta.env.VITE_ASSETS_URL}/uploads/${author?.avatar}`} alt="avatar-image" />
             </div>
             <div className="post__author-details">
-                <h5>By: Some good Author</h5>
-                <small>Created date</small>
+                <h5>By: {author?.name}</h5>
+                {/* Installed package react-time-ago javascript-time-ago */}
+                <small>< ReactTimeAgo date={new Date(createdAt)} locale='en-US' /></small>
             </div>
         </Link>
     )
